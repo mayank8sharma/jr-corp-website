@@ -5,25 +5,155 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JR Cloud | Lightning Fast Web Hosting</title>
   
-  <!-- Using a modern font like Inter -->
+  <!-- Modern Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- CSS Styles wrapped properly -->
+  
+  <!-- ALL CSS STYLES -->
   <style>
-    
+    /* 1. Variables & Resets */
+    :root {
+      --primary: #2563EB; 
+      --primary-hover: #1D4ED8;
+      --secondary: #0F172A; 
+      --text-main: #334155; 
+      --text-light: #64748B; 
+      --bg-main: #FFFFFF;
+      --bg-alt: #F8FAFC;
+      --font-family: 'Inter', sans-serif;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--text-main);
+      background: var(--bg-main);
+      line-height: 1.6;
+      padding-top: 80px; 
+      overflow-x: hidden; /* Prevents horizontal scroll during animations */
+    }
+
+    h1, h2, h3, h4 { color: var(--secondary); font-weight: 700; line-height: 1.2; }
+    a { text-decoration: none; transition: var(--transition); }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+    /* 2. Buttons */
+    .btn {
+      display: inline-block; padding: 12px 28px; border-radius: 6px;
+      font-weight: 600; cursor: pointer; text-align: center; transition: var(--transition);
+    }
+    .btn-primary { background: var(--primary); color: #fff; border: 2px solid var(--primary); box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
+    .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.3); }
+    .btn-secondary { background: transparent; color: var(--text-main); border: 2px solid #E2E8F0; }
+    .btn-secondary:hover { border-color: var(--text-light); color: var(--secondary); }
+    .btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 10px 24px; }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+
+    /* 3. Navbar */
+    #header {
+      position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px); border-bottom: 1px solid #E2E8F0; z-index: 1000;
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    .navbar-brand { font-size: 24px; font-weight: 700; color: var(--secondary); letter-spacing: -0.5px; }
+    .navbar-brand span { color: var(--primary); }
+    .nav-links { display: flex; list-style: none; align-items: center; gap: 32px; }
+    .nav-links a { color: var(--text-main); font-weight: 500; font-size: 15px; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+    /* 4. Hero Section */
+    #hero-banner {
+      padding: 100px 0; background: linear-gradient(135deg, var(--bg-alt) 0%, #E0E7FF 100%);
+      min-height: calc(100vh - 80px); display: flex; align-items: center;
+    }
+    .hero-container { display: flex; align-items: center; justify-content: center; text-align: center; }
+    .badge {
+      display: inline-block; padding: 6px 16px; background: rgba(37, 99, 235, 0.1);
+      color: var(--primary); border-radius: 30px; font-size: 14px; font-weight: 600; margin-bottom: 28px;
+    }
+    #hero-banner h1 { font-size: 64px; margin-bottom: 24px; letter-spacing: -2px; }
+    #hero-banner h1 span { color: var(--primary); }
+    #hero-banner p { font-size: 18px; color: var(--text-light); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 40px; }
+    .trust-indicators p { font-size: 14px; color: var(--text-light); font-weight: 500; }
+
+    /* 5. Generic Section Styles */
+    .section-padding { padding: 100px 0; }
+    .section-bg-alt { background-color: var(--bg-alt); }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 60px auto; }
+    .section-title { font-size: 40px; margin-bottom: 16px; letter-spacing: -1px; }
+    .section-subtitle { font-size: 18px; color: var(--text-light); }
+
+    /* 6. Features Section */
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .features-image-wrapper { position: relative; z-index: 1; }
+    .image-decoration {
+      position: absolute; top: -20px; left: -20px; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #E0E7FF 0%, rgba(224, 231, 255, 0.2) 100%);
+      border-radius: 20px; z-index: -1; transform: rotate(-3deg);
+    }
+    .features-img {
+      width: 100%; height: auto; border-radius: 16px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1); display: block;
+      background-color: #E2E8F0; min-height: 300px;
+    }
+    .features-content h3 { font-size: 32px; margin-bottom: 20px; }
+    .features-content p { color: var(--text-light); font-size: 17px; margin-bottom: 32px; }
+    .feature-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .feature-item { display: flex; align-items: center; gap: 12px; font-weight: 500; color: var(--secondary); font-size: 16px; }
+    .feature-icon { width: 20px; height: 20px; color: var(--primary); flex-shrink: 0; }
+
+    /* 7. Services Section */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .service-card {
+      background: #ffffff; padding: 40px 30px; border-radius: 16px; border: 1px solid #E2E8F0;
+      transition: var(--transition); display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05); border-color: #CBD5E1; }
+    .service-icon {
+      width: 60px; height: 60px; background: rgba(37, 99, 235, 0.1); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--primary);
+    }
+    .service-icon svg { width: 30px; height: 30px; }
+    .service-card h3 { font-size: 22px; margin-bottom: 12px; }
+    .service-card p { color: var(--text-light); font-size: 15px; margin-bottom: 24px; flex-grow: 1; }
+    .service-link { color: var(--primary); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 5px; }
+    .service-link span { transition: transform 0.3s ease; }
+    .service-card:hover .service-link span { transform: translateX(4px); }
+
+    /* 8. JavaScript Animation Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 9. Responsive Design */
+    @media (max-width: 992px) {
+      .features-grid { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      #hero-banner h1 { font-size: 42px; }
+      .nav-links { display: none; }
+      .hero-buttons { flex-direction: column; padding: 0 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 576px) { .feature-list { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body id="home">
 
+  <!-- Header -->
   <header id="header">
     <nav class="navbar">
       <div class="container nav-container">
-        <!-- Modernized Brand Logo Area -->
         <a class="navbar-brand" href="#home">JR<span>Cloud</span></a>
-        
-        <!-- Clean Navigation List -->
         <ul class="nav-links">
           <li><a href="#home" class="active">Home</a></li>
           <li><a href="#features">Features</a></li>
@@ -36,18 +166,17 @@
   </header>
 
   <main>
+    <!-- Hero Section -->
     <section id="hero-banner">
       <div class="container hero-container">
-        <div class="hero-content">
+        <div class="hero-content reveal">
           <span class="badge">Now Live: Next-Gen NVMe Servers</span>
           <h1>Unlimited Power For <br><span>Modern Websites</span></h1>
           <p>Deploy your web applications in seconds with JR Cloud. Experience guaranteed 99.99% uptime, enterprise-grade security, and 24/7 expert support.</p>
-          
           <div class="hero-buttons">
             <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
             <a href="#features" class="btn btn-secondary">Explore Features</a>
           </div>
-          
           <div class="trust-indicators">
              <p>✓ Free SSL Certificate &nbsp;&bull;&nbsp; ✓ 30-Day Money-Back &nbsp;&bull;&nbsp; ✓ Free Migrations</p>
           </div>
@@ -58,58 +187,28 @@
     <!-- Features Section -->
     <section id="features" class="section-padding">
       <div class="container">
-        
-        <!-- Modern Section Header -->
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="badge">Included Standard</span>
           <h2 class="section-title">Everything You Need to Succeed</h2>
           <p class="section-subtitle">We provide a robust suite of tools designed to make launching and managing your website effortless, whether you are a beginner or a pro.</p>
         </div>
-
-        <!-- Modern CSS Grid Layout -->
         <div class="features-grid">
-          
-          <!-- Image Column with modern styling -->
-          <div class="features-image-wrapper">
-            <!-- Decorative background element -->
+          <div class="features-image-wrapper reveal">
             <div class="image-decoration"></div>
-            <img src="images/features_img.png" alt="JR Cloud Hosting Features Dashboard" class="features-img">
+            <img src="images/features_img.png" alt="JR Cloud Dashboard" class="features-img">
           </div>
-
-          <!-- Content Column -->
-          <div class="features-content">
+          <div class="features-content reveal">
             <h3>Engineered for Performance & Ease</h3>
             <p>Experience the perfect balance of raw server power and user-friendly management tools. We handle the technical heavy lifting so you can focus on growing your business.</p>
-            
-            <!-- Upgraded 2-Column Feature List with SVG Icons -->
             <ul class="feature-list">
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Free Domain Registration
-              </li>
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Drag & Drop Builder
-              </li>
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Enhanced cPanel Access
-              </li>
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Unlimited NVMe Databases
-              </li>
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Unmetered Bandwidth
-              </li>
-              <li class="feature-item">
-                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Advanced DDoS Protection
-              </li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Free Domain Registration</li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Drag & Drop Builder</li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Enhanced cPanel Access</li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited NVMe Databases</li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Unmetered Bandwidth</li>
+              <li class="feature-item"><svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced DDoS Protection</li>
             </ul>
           </div>
-
         </div>
       </div>
     </section>
@@ -117,79 +216,99 @@
     <!-- Services Section -->
     <section id="services" class="section-padding section-bg-alt">
       <div class="container">
-        
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="badge">Our Solutions</span>
           <h2 class="section-title">Hosting Built for Your Needs</h2>
           <p class="section-subtitle">From personal blogs to enterprise applications, we have the perfect, high-performance infrastructure ready to deploy.</p>
         </div>
 
         <div class="services-grid">
-          
-          <!-- Service Card 1 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            </div>
+          <!-- Card 1 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
             <h3>Shared Hosting</h3>
             <p>Cost-effective, reliable hosting perfect for personal websites, portfolios, and small business landing pages.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
-          <!-- Service Card 2 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
-            </div>
+          <!-- Card 2 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></div>
             <h3>VPS Hosting</h3>
             <p>Dedicated resources and full root access. Scale your RAM and CPU instantly as your traffic grows.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
-          <!-- Service Card 3 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            </div>
+          <!-- Card 3 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
             <h3>Dedicated Servers</h3>
             <p>Ultimate performance and control. An entire server dedicated solely to your applications and databases.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
-          <!-- Service Card 4 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
-            </div>
+          <!-- Card 4 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg></div>
             <h3>Cloud Hosting</h3>
             <p>Maximum uptime with our clustered server environment. If one node fails, another takes over instantly.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
-          <!-- Service Card 5 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><path d="M10 2c1 .5 2 2 2 5"></path></svg>
-            </div>
+          <!-- Card 5 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><path d="M10 2c1 .5 2 2 2 5"></path></svg></div>
             <h3>WordPress Optimized</h3>
             <p>Pre-configured environments tailored for WordPress. Enjoy automated updates, backups, and caching.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
-          <!-- Service Card 6 -->
-          <div class="service-card">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
+          <!-- Card 6 -->
+          <div class="service-card reveal">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
             <h3>Reseller Hosting</h3>
             <p>Start your own hosting business. White-label our infrastructure and manage your clients via WHM.</p>
             <a href="#pricing" class="service-link">View Plans <span>&rarr;</span></a>
           </div>
-
         </div>
       </div>
     </section>
+
   </main>
 
+  <!-- Modern JavaScript Effects -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. Scroll Reveal Animation using Intersection Observer
+      const revealOptions = {
+        threshold: 0.15, // Trigger when 15% of the element is visible
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target); // Stop observing once animated
+          }
+        });
+      }, revealOptions);
+
+      // Select all elements with the 'reveal' class and observe them
+      document.querySelectorAll('.reveal').forEach((element) => {
+        revealObserver.observe(element);
+      });
+
+      // 2. Smooth Scrolling for Navigation Links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetElement = document.querySelector(this.getAttribute('href'));
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+    });
+  </script>
 </body>
 </html>
