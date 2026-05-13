@@ -345,3 +345,95 @@
         grid-template-columns: 1fr; 
       }
     }
+
+    /* =========================================
+       10. Services Section
+       ========================================= */
+    .section-bg-alt {
+      background-color: var(--bg-alt); /* Uses the slate-50 variable for slight contrast */
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
+      gap: 30px;
+    }
+
+    .service-card {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      border: 1px solid #E2E8F0;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* Hover effect: lifts the card and adds a soft shadow */
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+      border-color: #CBD5E1;
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--primary);
+    }
+
+    .service-icon svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .service-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--text-light);
+      font-size: 15px;
+      margin-bottom: 24px;
+      flex-grow: 1; /* Pushes the link to the bottom if text lengths vary */
+    }
+
+    .service-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .service-link span {
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-link span {
+      transform: translateX(4px); /* Animates the arrow on hover */
+    }
+
+    /* =========================================
+       11. Services Responsive Design
+       ========================================= */
+    @media (max-width: 992px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr; /* 1 column on phones */
+      }
+    }
