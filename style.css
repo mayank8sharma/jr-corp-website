@@ -1,0 +1,231 @@
+/* =========================================
+   1. CSS Variables for Modern Theming
+   ========================================= */
+:root {
+  --primary: #2563EB; /* Modern, vibrant Blue */
+  --primary-hover: #1D4ED8;
+  --secondary: #0F172A; /* Slate 900 for dark text */
+  --text-main: #334155; /* Slate 700 for paragraphs */
+  --text-light: #64748B; /* Slate 500 for subtle text */
+  --bg-main: #FFFFFF;
+  --bg-alt: #F8FAFC;
+  --font-family: 'Inter', sans-serif;
+  --transition: all 0.3s ease;
+}
+
+/* =========================================
+   2. Reset & Base Styles
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-main);
+  background: var(--bg-main);
+  line-height: 1.6;
+  padding-top: 80px; /* Space for the fixed header */
+}
+
+h1, h2, h3, h4 {
+  color: var(--secondary);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   3. Typography & Buttons
+   ========================================= */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+  border: 2px solid #E2E8F0;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-light);
+  color: var(--secondary);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 10px 24px;
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* =========================================
+   4. Navbar
+   ========================================= */
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); /* Modern glassmorphism effect */
+  border-bottom: 1px solid #E2E8F0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--secondary);
+  letter-spacing: -0.5px;
+}
+
+.navbar-brand span {
+  color: var(--primary);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--primary);
+}
+
+/* =========================================
+   5. Hero Section
+   ========================================= */
+#hero-banner {
+  padding: 100px 0;
+  /* Clean, modern gradient instead of a generic heavy image */
+  background: linear-gradient(135deg, var(--bg-alt) 0%, #E0E7FF 100%);
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+
+#hero-banner h1 {
+  font-size: 64px;
+  margin-bottom: 24px;
+  letter-spacing: -2px;
+}
+
+#hero-banner h1 span {
+  color: var(--primary);
+}
+
+#hero-banner p {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.trust-indicators p {
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* =========================================
+   6. Responsive Design
+   ========================================= */
+@media (max-width: 768px) {
+  #hero-banner h1 {
+    font-size: 42px;
+    letter-spacing: -1px;
+  }
+  
+  .nav-links {
+    display: none; /* Hide for mobile: would typically be replaced by a hamburger menu icon here */
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+}
