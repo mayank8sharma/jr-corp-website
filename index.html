@@ -207,6 +207,155 @@
 
     .form-group textarea { resize: vertical; min-height: 120px; }
 
+    /* =========================================
+       13. Our Team Section
+       ========================================= */
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+    
+    .team-card { 
+      background: #FFFFFF; 
+      border-radius: 16px; 
+      overflow: hidden; 
+      border: 1px solid #E2E8F0; 
+      transition: var(--transition); 
+      text-align: center; 
+    }
+    
+    .team-card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); 
+      border-color: #CBD5E1;
+    }
+    
+    /* Image and Hover Effects */
+    .team-image-wrapper { 
+      position: relative; 
+      overflow: hidden; 
+      aspect-ratio: 1 / 1; /* Keeps the image a perfect square */
+      background: var(--bg-alt);
+    }
+    
+    .image-placeholder { 
+      width: 100%; 
+      height: 100%; 
+      background-size: cover; 
+      background-position: center; 
+      transition: transform 0.6s ease, filter 0.6s ease; 
+      filter: grayscale(100%); /* Start black and white */
+    }
+    
+    .team-card:hover .image-placeholder { 
+      transform: scale(1.08); /* Zooms in gently */
+      filter: grayscale(0%); /* Bursts into color */
+    }
+    
+    /* Social Links Slide-Up */
+    .team-social { 
+      position: absolute; 
+      bottom: -60px; /* Hidden below the image initially */
+      left: 0; 
+      width: 100%; 
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent); 
+      display: flex; 
+      justify-content: center; 
+      gap: 15px; 
+      padding: 30px 0 15px; 
+      transition: bottom 0.4s ease; 
+    }
+    
+    .team-card:hover .team-social { 
+      bottom: 0; /* Slides up on hover */
+    }
+    
+    .team-social a { 
+      color: #fff; 
+      width: 38px; 
+      height: 38px; 
+      background: var(--primary); 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: background 0.3s; 
+    }
+    
+    .team-social a:hover { background: var(--primary-hover); }
+    .team-social svg { width: 18px; height: 18px; }
+    
+    /* Info Area */
+    .team-info { padding: 25px 20px; }
+    .team-info h3 { font-size: 20px; margin-bottom: 6px; letter-spacing: -0.5px;}
+    .team-role { color: var(--primary); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    /* =========================================
+       14. Testimonial Section (Scroll Snap Slider)
+       ========================================= */
+    .testimonial-wrapper { position: relative; margin-top: 40px; }
+    
+    .testimonial-track { 
+      display: flex; 
+      gap: 30px; 
+      overflow-x: auto; 
+      scroll-snap-type: x mandatory; 
+      scroll-behavior: smooth; 
+      -webkit-overflow-scrolling: touch; 
+      padding-bottom: 20px; 
+    }
+    
+    /* Hides the ugly native scrollbar but keeps functionality */
+    .testimonial-track::-webkit-scrollbar { display: none; }
+    .testimonial-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .testimonial-card { 
+      flex: 0 0 calc(33.333% - 20px); /* Shows 3 cards at once on desktop */
+      scroll-snap-align: start; 
+      background: #FFFFFF; 
+      padding: 40px 30px; 
+      border-radius: 16px; 
+      border: 1px solid #E2E8F0; 
+      transition: var(--transition); 
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05); }
+
+    .stars { display: flex; gap: 4px; margin-bottom: 20px; color: #F59E0B; /* Golden yellow */ }
+    .stars svg { width: 20px; height: 20px; }
+    
+    .quote { color: var(--text-main); font-size: 16px; font-style: italic; line-height: 1.7; margin-bottom: 30px; flex-grow: 1; }
+    
+    .author-info { display: flex; align-items: center; gap: 15px; border-top: 1px solid #F1F5F9; padding-top: 20px; }
+    .author-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    .author-info h4 { font-size: 16px; margin: 0 0 2px 0; color: var(--secondary); }
+    .author-info p { font-size: 13px; color: var(--text-light); margin: 0; }
+
+    /* Custom Navigation Buttons */
+    .slider-controls { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+    .slider-btn { 
+      background: #FFFFFF; 
+      border: 1px solid #E2E8F0; 
+      width: 48px; 
+      height: 48px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      color: var(--secondary); 
+      transition: var(--transition); 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+    }
+    .slider-btn svg { width: 20px; height: 20px; }
+    .slider-btn:hover { background: var(--primary); color: #FFFFFF; border-color: var(--primary); transform: scale(1.1); }
+
+  
+
+    /* Team Responsive */
+    @media (max-width: 1100px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    }
+ 
     /* Form Responsive */
 
  
@@ -221,17 +370,23 @@
       .pricing-card.popular:hover { transform: translateY(-5px); }
       .contact-grid { grid-template-columns: 1fr; gap: 50px; }
       .contact-form-wrapper { padding: 30px 20px; }
+      .testimonial-card { flex: 0 0 calc(50% - 15px); } /* Shows 2 cards on tablet */
+
     }
     @media (max-width: 768px) {
       #hero-banner h1 { font-size: 42px; }
       .nav-links { display: none; }
       .hero-buttons { flex-direction: column; padding: 0 20px; }
       .services-grid { grid-template-columns: 1fr; }
+      .testimonial-card { flex: 0 0 100%; scroll-snap-align: center; } /* Shows 1 card on mobile */
+
     }
     @media (max-width: 576px) { 
       .feature-list { grid-template-columns: 1fr; } 
       .stats-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
       .form-row { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+
     }
   </style>
 </head>
@@ -352,6 +507,195 @@
             </div>
             
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section id="our-team" class="section-padding">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="badge">The Minds Behind JR Cloud</span>
+          <h2 class="section-title">Meet Our Leadership Team</h2>
+          <p class="section-subtitle">We are a group of passionate engineers, designers, and support specialists dedicated to your online success.</p>
+        </div>
+
+        <div class="team-grid">
+          
+          <!-- Team Member 1 -->
+          <div class="team-card reveal">
+            <div class="team-image-wrapper">
+              <!-- Replace src with your actual team images -->
+              <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80');"></div>
+              
+              <!-- Hover Social Icons -->
+              <div class="team-social">
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>Michael Scott</h3>
+              <span class="team-role">Chief Executive Officer</span>
+            </div>
+          </div>
+
+          <!-- Team Member 2 -->
+          <div class="team-card reveal">
+            <div class="team-image-wrapper">
+              <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80');"></div>
+              
+              <div class="team-social">
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>Sarah Jenkins</h3>
+              <span class="team-role">Head of Engineering</span>
+            </div>
+          </div>
+
+          <!-- Team Member 3 -->
+          <div class="team-card reveal">
+            <div class="team-image-wrapper">
+              <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80');"></div>
+              
+              <div class="team-social">
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>David Chen</h3>
+              <span class="team-role">Lead Cloud Architect</span>
+            </div>
+          </div>
+
+          <!-- Team Member 4 -->
+          <div class="team-card reveal">
+            <div class="team-image-wrapper">
+              <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80');"></div>
+              
+              <div class="team-social">
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>Elena Rodriguez</h3>
+              <span class="team-role">Director of Support</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding section-bg-alt">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="badge">Customer Stories</span>
+          <h2 class="section-title">Trusted by Thousands</h2>
+          <p class="section-subtitle">Don't just take our word for it. Here is what our global community of developers and businesses have to say about JR Cloud.</p>
+        </div>
+
+        <div class="testimonial-wrapper reveal">
+          
+          <!-- The Scrollable Track -->
+          <div class="testimonial-track" id="testimonial-track">
+            
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              </div>
+              <p class="quote">"Migrating to JR Cloud was the best decision we made this year. Our site load speeds dropped by 60%, and the support team is genuinely incredible. Highly recommended!"</p>
+              <div class="author-info">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Customer">
+                <div>
+                  <h4>Mark Stevenson</h4>
+                  <p>Founder, TechFlow</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              </div>
+              <p class="quote">"I've used almost every major hosting provider, and the custom control panel here is lightyears ahead. Managing my 15+ client WordPress sites is finally completely painless."</p>
+              <div class="author-info">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Customer">
+                <div>
+                  <h4>Jessica Alba</h4>
+                  <p>Freelance Web Designer</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              </div>
+              <p class="quote">"We run a high-traffic e-commerce store, and uptime is everything. Since moving to their Enterprise Dedicated Server, we haven't experienced a single minute of downtime."</p>
+              <div class="author-info">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80" alt="Customer">
+                <div>
+                  <h4>David Chen</h4>
+                  <p>CTO, RetailPlus</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card">
+              <div class="stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              </div>
+              <p class="quote">"I am not a technical person, but the setup process was unbelievably simple. When I did have a question, the live chat answered me in less than 30 seconds."</p>
+              <div class="author-info">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80" alt="Customer">
+                <div>
+                  <h4>Sarah Jenkins</h4>
+                  <p>Blogger & Author</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Slider Controls -->
+          <div class="slider-controls">
+            <button class="slider-btn" id="prev-btn" aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <button class="slider-btn" id="next-btn" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -666,6 +1010,27 @@
         });
       }
 
+      // 6. Testimonial Slider Controls
+      const track = document.getElementById('testimonial-track');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      if(track && prevBtn && nextBtn) {
+        // Calculate the width of one card plus the gap to know how far to scroll
+        const scrollAmount = () => {
+          const card = track.querySelector('.testimonial-card');
+          // card width + 30px gap
+          return card.offsetWidth + 30; 
+        };
+
+        nextBtn.addEventListener('click', () => {
+          track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+        });
+
+        prevBtn.addEventListener('click', () => {
+          track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+        });
+      }
     });
   </script>
 </body>
