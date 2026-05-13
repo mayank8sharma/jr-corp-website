@@ -57,8 +57,40 @@
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
     /* 4. Hero Section */
-    #hero-banner { padding: 100px 0; background: linear-gradient(135deg, var(--bg-alt) 0%, #E0E7FF 100%); min-height: calc(100vh - 80px); display: flex; align-items: center; }
-    .hero-container { display: flex; align-items: center; justify-content: center; text-align: center; }
+   /* Hero Section Canvas Updates */
+    #hero-banner { 
+      position: relative; 
+      padding: 100px 0; 
+      background: linear-gradient(135deg, var(--bg-alt) 0%, #E0E7FF 100%); 
+      min-height: calc(100vh - 80px); 
+      display: flex; 
+      align-items: center; 
+      overflow: hidden; /* Keeps canvas inside */
+    }
+    #network-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.6; /* Keeps the network subtle so text is readable */
+    }
+   .hero-container {
+      position: relative;
+      z-index: 1; /* Puts the text on top of the canvas */
+    }
+    /* Typewriter Cursor */
+    .type-cursor {
+      color: var(--primary);
+      font-weight: 300;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
     .badge { display: inline-block; padding: 6px 16px; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 30px; font-size: 14px; font-weight: 600; margin-bottom: 28px; }
     #hero-banner h1 { font-size: 64px; margin-bottom: 24px; letter-spacing: -2px; }
     #hero-banner h1 span { color: var(--primary); }
@@ -410,11 +442,18 @@
 
   <main>
     <!-- Hero Section -->
+    <!-- Hero Section -->
     <section id="hero-banner">
+      <!-- NEW: Interactive Canvas Background -->
+      <canvas id="network-canvas"></canvas>
+
       <div class="container hero-container">
         <div class="hero-content reveal">
           <span class="badge">Now Live: Next-Gen NVMe Servers</span>
-          <h1>Unlimited Power For <br><span>Modern Websites</span></h1>
+          
+          <!-- NEW: Typewriter Headline -->
+          <h1>Unlimited Power For <br><span id="typewriter-text">Modern Websites</span><span class="type-cursor">|</span></h1>
+          
           <p>Deploy your web applications in seconds with JR Corp. Experience guaranteed 99.99% uptime, enterprise-grade security, and 24/7 expert support.</p>
           <div class="hero-buttons">
             <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
@@ -880,6 +919,177 @@
   <!-- Modern JavaScript Effects -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      /* =========================================
+     1. Typewriter Effect
+     ========================================= */
+  const typedTextSpan = document.getElementById("typewriter-text");
+  const wordsArray = ["Modern Websites.", "E-commerce Stores.", "Enterprise Apps.", "SaaS Platforms."];
+  const typingDelay = 100;
+  const erasingDelay = 50;
+  const newWordDelay = 2000; // Delay between current and next word
+  let wordIndex = 0;
+  let charIndex = 0;
+
+  function type() {
+    if (charIndex < wordsArray[wordIndex].length) {
+      typedTextSpan.textContent += wordsArray[wordIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(type, typingDelay);
+    } else {
+      setTimeout(erase, newWordDelay);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      typedTextSpan.textContent = wordsArray[wordIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(erase, erasingDelay);
+    } else {
+      wordIndex++;
+      if (wordIndex >= wordsArray.length) wordIndex = 0;
+      setTimeout(type, typingDelay + 500);
+    }
+  }
+
+  // Start the typing effect
+  if (typedTextSpan) {
+    typedTextSpan.textContent = ""; // Clear initial text
+    setTimeout(type, newWordDelay);
+  }
+
+  /* =========================================
+     2. Interactive Network Canvas (Particles)
+     ========================================= */
+  const canvas = document.getElementById('network-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    // Resize canvas to fit hero section
+    canvas.width = window.innerWidth;
+    canvas.height = document.getElementById('hero-banner').offsetHeight;
+
+    // Mouse interactions
+    let mouse = {
+      x: null,
+      y: null,
+      radius: 150 // Radius for mouse interaction
+    }
+
+    window.addEventListener('mousemove', function(event) {
+      mouse.x = event.x;
+      // Adjust mouse Y based on scroll position
+      mouse.y = event.y - document.getElementById('hero-banner').getBoundingClientRect().top;
+    });
+
+    // Create Particle class
+    class Particle {
+      constructor(x, y, directionX, directionY, size, color) {
+        this.x = x;
+        this.y = y;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.size = size;
+        this.color = color;
+      }
+      
+      // Draw individual particle
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      
+      // Check particle position, calculate mouse interaction, move the particle
+      update() {
+        // Prevent particles from going off screen
+        if (this.x > canvas.width || this.x < 0) {
+          this.directionX = -this.directionX;
+        }
+        if (this.y > canvas.height || this.y < 0) {
+          this.directionY = -this.directionY;
+        }
+
+        // Collision detection - mouse position / particle position
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx*dx + dy*dy);
+        
+        // Push particles away from mouse
+        if (distance < mouse.radius + this.size) {
+          if (mouse.x < this.x && this.x < canvas.width - this.size * 10) { this.x += 2; }
+          if (mouse.x > this.x && this.x > this.size * 10) { this.x -= 2; }
+          if (mouse.y < this.y && this.y < canvas.height - this.size * 10) { this.y += 2; }
+          if (mouse.y > this.y && this.y > this.size * 10) { this.y -= 2; }
+        }
+        
+        // Move particle naturally
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+      }
+    }
+
+    // Create particle array
+    function init() {
+      particlesArray = [];
+      let numberOfParticles = (canvas.height * canvas.width) / 12000;
+      for (let i = 0; i < numberOfParticles; i++) {
+        let size = (Math.random() * 3) + 1;
+        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+        let directionX = (Math.random() * 1) - 0.5;
+        let directionY = (Math.random() * 1) - 0.5;
+        let color = 'rgba(37, 99, 235, 0.3)'; // Primary blue color, partially transparent
+
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+      }
+    }
+
+    // Draw lines between particles to create the "network" look
+    function connect() {
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+          let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+          + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+          
+          if (distance < (canvas.width / 10) * (canvas.height / 10)) {
+            let opacityValue = 1 - (distance / 20000);
+            ctx.strokeStyle = 'rgba(37, 99, 235,' + opacityValue + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+      }
+      connect();
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      canvas.width = innerWidth;
+      canvas.height = document.getElementById('hero-banner').offsetHeight;
+      init();
+    });
+
+    // Start everything
+    init();
+    animate();
+  }
       
       // 1. Scroll Reveal Animation
       const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
