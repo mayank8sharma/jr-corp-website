@@ -113,12 +113,59 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
+    /* 11. Pricing Section & Interactive Toggle */
+    .billing-toggle-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 50px; }
+    .toggle-label { font-weight: 600; color: var(--text-light); font-size: 16px; transition: color 0.3s; }
+    .toggle-label.active-label { color: var(--secondary); }
+    
+    .discount-badge { background: #10B981; color: white; font-size: 11px; padding: 3px 8px; border-radius: 20px; vertical-align: middle; margin-left: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    /* Toggle Switch Styles */
+    .toggle-switch { position: relative; display: inline-block; width: 60px; height: 32px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--primary); transition: .4s; border-radius: 34px; }
+    .toggle-slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+    .toggle-switch input:checked + .toggle-slider { background-color: var(--primary); }
+    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(28px); }
+
+    /* Pricing Grid & Cards */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: center; }
+    .pricing-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 40px 30px; position: relative; transition: var(--transition); text-align: left; }
+    .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); }
+    
+    /* Highlighting the Popular Card */
+    .pricing-card.popular { border: 2px solid var(--primary); transform: scale(1.05); box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15); z-index: 2; }
+    .pricing-card.popular:hover { transform: scale(1.05) translateY(-5px); }
+    .popular-ribbon { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; padding: 4px 16px; font-size: 12px; font-weight: 700; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Price Typography */
+    .pricing-card h3 { font-size: 24px; margin-bottom: 8px; }
+    .plan-desc { color: var(--text-light); font-size: 14px; margin-bottom: 30px; min-height: 42px; }
+    .price-box { margin-bottom: 30px; color: var(--secondary); }
+    .currency { font-size: 24px; font-weight: 600; vertical-align: top; }
+    .price { font-size: 56px; font-weight: 700; letter-spacing: -2px; line-height: 1; transition: opacity 0.3s; }
+    .price.fade-out { opacity: 0; }
+    .term { color: var(--text-light); font-weight: 500; }
+
+    /* Feature List */
+    .plan-features { list-style: none; margin-bottom: 40px; }
+    .plan-features li { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 15px; color: var(--text-main); }
+    .plan-features li svg { width: 18px; height: 18px; color: #10B981; flex-shrink: 0; }
+    .plan-features li.disabled { color: #94A3B8; text-decoration: line-through; }
+    .plan-features li.disabled svg { color: #94A3B8; }
+
+    .btn-full { display: block; width: 100%; text-align: center; }
+
+ 
     /* 10. Responsive Design */
     @media (max-width: 992px) {
       .features-grid, .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .services-grid { grid-template-columns: repeat(2, 1fr); }
       .about-image-wrapper { max-width: 600px; margin: 0 auto; order: 2; /* Puts image below text on mobile */ }
       .about-content { order: 1; }
+       .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; gap: 40px; }
+      .pricing-card.popular { transform: scale(1); }
+      .pricing-card.popular:hover { transform: translateY(-5px); }
     }
     @media (max-width: 768px) {
       #hero-banner h1 { font-size: 42px; }
@@ -253,6 +300,87 @@
       </div>
     </section>
 
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding section-bg-alt">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="badge">Pricing Plans</span>
+          <h2 class="section-title">Transparent Pricing, No Surprises</h2>
+          <p class="section-subtitle">Choose the perfect plan for your business. Switch to yearly billing to save up to 20%.</p>
+        </div>
+
+        <!-- Interactive Billing Toggle -->
+        <div class="billing-toggle-container reveal">
+          <span class="toggle-label" id="label-monthly">Monthly</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="billing-toggle">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="label-yearly">Annually <span class="discount-badge">Save 20%</span></span>
+        </div>
+
+        <div class="pricing-grid">
+          
+          <!-- Pricing Card 1 -->
+          <div class="pricing-card reveal">
+            <h3>Starter</h3>
+            <p class="plan-desc">Perfect for personal blogs and small projects.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price" data-monthly="4.99" data-yearly="3.99">4.99</span>
+              <span class="term">/mo</span>
+            </div>
+            <ul class="plan-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 Website</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 GB NVMe Storage</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Free SSL Certificate</li>
+              <li class="disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Daily Backups</li>
+            </ul>
+            <a href="#" class="btn btn-outline btn-full">Choose Starter</a>
+          </div>
+
+          <!-- Pricing Card 2 (Highlighted/Popular) -->
+          <div class="pricing-card popular reveal">
+            <div class="popular-ribbon">Most Popular</div>
+            <h3>Professional</h3>
+            <p class="plan-desc">Ideal for growing businesses and online stores.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price" data-monthly="9.99" data-yearly="7.99">9.99</span>
+              <span class="term">/mo</span>
+            </div>
+            <ul class="plan-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited Websites</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 50 GB NVMe Storage</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Free SSL & Domain</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Daily Automated Backups</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-full">Choose Professional</a>
+          </div>
+
+          <!-- Pricing Card 3 -->
+          <div class="pricing-card reveal">
+            <h3>Enterprise</h3>
+            <p class="plan-desc">Maximum resources for high-traffic applications.</p>
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="price" data-monthly="24.99" data-yearly="19.99">24.99</span>
+              <span class="term">/mo</span>
+            </div>
+            <ul class="plan-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited Everything</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 200 GB NVMe Storage</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Free Dedicated IP</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Priority 24/7 Support</li>
+            </ul>
+            <a href="#" class="btn btn-outline btn-full">Choose Enterprise</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Modern JavaScript Effects -->
@@ -311,6 +439,42 @@
 
       counters.forEach(counter => {
         counterObserver.observe(counter);
+      });
+
+      // 4. Interactive Pricing Toggle
+      const billingToggle = document.getElementById('billing-toggle');
+      const priceElements = document.querySelectorAll('.price');
+      const labelMonthly = document.getElementById('label-monthly');
+      const labelYearly = document.getElementById('label-yearly');
+
+      // Set initial active state
+      labelMonthly.classList.add('active-label');
+
+      billingToggle.addEventListener('change', () => {
+        // Toggle the active label colors
+        if(billingToggle.checked) {
+          labelYearly.classList.add('active-label');
+          labelMonthly.classList.remove('active-label');
+        } else {
+          labelMonthly.classList.add('active-label');
+          labelYearly.classList.remove('active-label');
+        }
+
+        // Animate and update the numbers
+        priceElements.forEach(priceEl => {
+          // Fade out
+          priceEl.classList.add('fade-out');
+          
+          // Wait for fade out, swap number, fade back in
+          setTimeout(() => {
+            if (billingToggle.checked) {
+              priceEl.innerText = priceEl.getAttribute('data-yearly');
+            } else {
+              priceEl.innerText = priceEl.getAttribute('data-monthly');
+            }
+            priceEl.classList.remove('fade-out');
+          }, 300); // 300ms matches the CSS transition speed
+        });
       });
 
     });
